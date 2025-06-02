@@ -1,15 +1,18 @@
 import styles from './Product.module.scss';
 import clsx from 'clsx';
 import Button from '../Button/Button';
+import { useState } from 'react';
 
-const Product = ({ title, basePrice }) => {
+const Product = ({ title, basePrice, colors, sizes, name }) => {
+  const [currentColor, setCurrentColor] = useState(colors[0]);
+  const [currentSize, setCurrentSize] = useState(sizes[0].name);
   return (
     <article className={styles.product}>
       <div className={styles.imageContainer}>
         <img
           className={styles.image}
-          alt='Kodilla shirt'
-          src={`${process.env.PUBLIC_URL}/images/products/shirt-kodilla--black.jpg`}
+          alt={`Koszulka-${name} coloru ${currentColor}`}
+          src={`${process.env.PUBLIC_URL}/images/products/shirt-${name}--${currentColor}.jpg`}
         />
       </div>
       <div>
@@ -19,7 +22,7 @@ const Product = ({ title, basePrice }) => {
         </header>
         <form>
           <div className={styles.sizes}>
-            <h3 className={styles.optionLabel}>Sizes</h3>
+            <h3 className={styles.optionLabel}>sizes</h3>
             <ul className={styles.choices}>
               <li>
                 <button type='button' className={styles.active}>
