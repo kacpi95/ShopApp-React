@@ -6,6 +6,12 @@ import { useState } from 'react';
 const Product = ({ title, basePrice, colors, sizes, name }) => {
   const [currentColor, setCurrentColor] = useState(colors[0]);
   const [currentSize, setCurrentSize] = useState(sizes[0].name);
+
+  const changeClassColor = (color) => {
+    return styles[
+      'color' + color[0].toUpperCase() + color.substr(1).toLowerCase()
+    ];
+  };
   return (
     <article className={styles.product}>
       <div className={styles.imageContainer}>
@@ -24,37 +30,32 @@ const Product = ({ title, basePrice, colors, sizes, name }) => {
           <div className={styles.sizes}>
             <h3 className={styles.optionLabel}>sizes</h3>
             <ul className={styles.choices}>
-              <li>
-                <button type='button' className={styles.active}>
-                  S
-                </button>
-              </li>
-              <li>
-                <button type='button'>M</button>
-              </li>
-              <li>
-                <button type='button'>L</button>
-              </li>
-              <li>
-                <button type='button'>XL</button>
-              </li>
+              {sizes.map((el) => (
+                <li key={el.name}>
+                  <button
+                    type='button'
+                    className={el.name === currentSize ? styles.active : ''}
+                  >
+                    {el.name}
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
           <div className={styles.colors}>
             <h3 className={styles.optionLabel}>Colors</h3>
             <ul className={styles.choices}>
-              <li>
-                <button
-                  type='button'
-                  className={clsx(styles.colorBlack, styles.active)}
-                />
-              </li>
-              <li>
-                <button type='button' className={clsx(styles.colorRed)} />
-              </li>
-              <li>
-                <button type='button' className={clsx(styles.colorWhite)} />
-              </li>
+              {colors.map((el) => (
+                <li key={el}>
+                  <button
+                    type='button'
+                    className={clsx(
+                      changeClassColor(el),
+                      el === currentColor && styles.active
+                    )}
+                  ></button>
+                </li>
+              ))}
             </ul>
           </div>
           <Button className={styles.button}>
