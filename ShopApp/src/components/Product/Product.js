@@ -6,11 +6,16 @@ import { useState } from 'react';
 const Product = ({ title, basePrice, colors, sizes, name }) => {
   const [currentColor, setCurrentColor] = useState(colors[0]);
   const [currentSize, setCurrentSize] = useState(sizes[0].name);
+  const [currentPrice, setCurrentPrice] = useState(0);
 
   const changeClassColor = (color) => {
     return styles[
       'color' + color[0].toUpperCase() + color.substr(1).toLowerCase()
     ];
+  };
+  const getPrice = () => {
+    const actualPrice = basePrice + currentPrice;
+    return actualPrice;
   };
   return (
     <article className={styles.product}>
@@ -24,7 +29,7 @@ const Product = ({ title, basePrice, colors, sizes, name }) => {
       <div>
         <header>
           <h2 className={styles.name}>{title}</h2>
-          <span className={styles.price}>Price: {basePrice}$</span>
+          <span className={styles.price}>Price: {getPrice()}$</span>
         </header>
         <form>
           <div className={styles.sizes}>
@@ -35,6 +40,10 @@ const Product = ({ title, basePrice, colors, sizes, name }) => {
                   <button
                     type='button'
                     className={el.name === currentSize ? styles.active : ''}
+                    onClick={() => {
+                      setCurrentSize(el.name);
+                      setCurrentPrice(el.additionalPrice);
+                    }}
                   >
                     {el.name}
                   </button>
@@ -53,6 +62,7 @@ const Product = ({ title, basePrice, colors, sizes, name }) => {
                       changeClassColor(el),
                       el === currentColor && styles.active
                     )}
+                    onClick={() => setCurrentColor(el)}
                   ></button>
                 </li>
               ))}
