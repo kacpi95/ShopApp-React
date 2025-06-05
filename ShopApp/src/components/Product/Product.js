@@ -17,6 +17,13 @@ const Product = ({ title, basePrice, colors, sizes, name }) => {
     const actualPrice = basePrice + currentPrice;
     return actualPrice;
   };
+  const handleAddProduct = (e) => {
+    e.preventDefault();
+    console.log('Name:', title);
+    console.log('Price:', getPrice());
+    console.log('Size:', currentSize);
+    console.log('Color:', currentColor);
+  };
   return (
     <article className={styles.product}>
       <div className={styles.imageContainer}>
@@ -31,7 +38,7 @@ const Product = ({ title, basePrice, colors, sizes, name }) => {
           <h2 className={styles.name}>{title}</h2>
           <span className={styles.price}>Price: {getPrice()}$</span>
         </header>
-        <form>
+        <form onSubmit={handleAddProduct}>
           <div className={styles.sizes}>
             <h3 className={styles.optionLabel}>sizes</h3>
             <ul className={styles.choices}>
